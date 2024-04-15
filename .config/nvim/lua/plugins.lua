@@ -38,17 +38,11 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
     "numToStr/Comment.nvim",
-    -- "zbirenbaum/copilot.lua",
-    -- "zbirenbaum/copilot-cmp",
 })
 
 -- gitsigns setup
 require("gitsigns").setup()
 vim.cmd("colorscheme nightfox")
-
--- copilot setup
--- require("copilot").setup()
--- require("copilot_cmp").setup()
 
 -- diffview setup
 local diffview = require("diffview")
