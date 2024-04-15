@@ -26,7 +26,7 @@ require("mason-lspconfig").setup({
 require("mason-null-ls").setup({ -- see https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
     ensure_installed = {
         "stylua",
-        -- "gofumt", -- needs go to be installed first
+        -- "gofumpt", -- needs go to be installed first
         -- "golines", -- needs go to be installed first
         "black",
         "jq", -- needs to be installed manually first

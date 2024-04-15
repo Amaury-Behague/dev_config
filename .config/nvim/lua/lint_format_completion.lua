@@ -10,7 +10,7 @@ local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.stylua,
-        -- null_ls.builtins.formatting.gofumt,
+        -- null_ls.builtins.formatting.gofumpt,
         -- null_ls.builtins.formatting.golines.with({
         --     extra_args = {"-m", "120"}
         -- }),
@@ -29,7 +29,7 @@ null_ls.setup({
         null_ls.builtins.formatting.isort,
         -- null_ls.builtins.formatting.rustfmt, -- not supported by none-ls
         null_ls.builtins.formatting.shfmt,
-        -- null_ls.builtins.formatting.terraform_fmt -- needs manual install
+        -- null_ls.builtins.formatting.terraform_fmt, -- needs manual install
         null_ls.builtins.formatting.buildifier,
         null_ls.builtins.formatting.buf,
     },
