@@ -1,0 +1,28 @@
+[user]
+	email = 127762321+Amaury-Behague@users.noreply.github.com
+	name = Amaury Behague
+	signingkey = ~/.ssh/id_ed25519.pub
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[core]
+	editor = nvim # use your preferred editor here
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+	insteadOf = git://github.com/
+[rerere] # avoid having to solve the same conflicts multiple times
+	enabled = true
+	autoUpdate = true
+[branch] # show most recent branches at the top
+	sort = -committerdate
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[rebase] # rebase all branches between your current branch and the branch you
+         # are rebasing on when you rebase, working similarly as "stacks".
+	updateRefs = true
+[fetch] # deletes deleted branches when you fetch - complemented by the alias
+	prune = true
