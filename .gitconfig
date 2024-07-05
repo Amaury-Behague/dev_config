@@ -24,5 +24,3 @@
 [rebase] # rebase all branches between your current branch and the branch you
          # are rebasing on when you rebase, working similarly as "stacks".
 	updateRefs = true
-[fetch] # deletes deleted branches when you fetch - complemented by the alias
-	prune = true

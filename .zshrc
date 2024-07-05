@@ -134,13 +134,13 @@ alias gc="git commit"
 alias gca="git commit --amend"
 alias gg="git log --graph --oneline --all"
 # fetches only the current branch from the remote to be faster and avoid noise
-alias gf="git fetch --prune origin \$(git rev-parse --abbrev-ref HEAD) && git checkout FETCH_HEAD -B \$(git rev-parse --abbrev-ref HEAD) && gbd"
+alias gf="git fetch --prune origin \$(git rev-parse --abbrev-ref HEAD) && git checkout FETCH_HEAD -B \$(git rev-parse --abbrev-ref HEAD)"
 # create branch
 alias gbc="git switch -c"
 # pulls the main branch and rebases your branch on it
 alias gbr="MAIN_BRANCH=\$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') CURRENT_BRANCH=\$(git rev-parse --abbrev-ref HEAD) && git switch \$MAIN_BRANCH && gf && git switch \$CURRENT_BRANCH && git rebase \$MAIN_BRANCH"
-# delete branchees that have been deleted from the remote
-alias gbd="git branch --v | grep '\[gone\]' | awk '{print $1}' | xargs git branch -D"
+# delete branches that have been deleted from the remote
+alias gbd="git fetch -p 2> /dev/null && for branch in \$(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '\$2 == \"[gone]\" {sub(\"refs/heads/\", \"\", \$1); print \$1}'); do git branch -D \$branch; done"
 # push the branch to the remote (with the same name) and open PR with using commit messages
 alias gpu="git push -u origin \$(git rev-parse --abbrev-ref HEAD) && gh pr create -d -f"
 alias gpf="git push -f"
