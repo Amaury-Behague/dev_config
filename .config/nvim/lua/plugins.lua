@@ -38,6 +38,7 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
     "numToStr/Comment.nvim",
+    "m4xshen/autoclose.nvim",
 })
 
 -- gitsigns setup
@@ -116,6 +117,9 @@ require("nvim-tree").setup({
     },
 })
 local tree_api = require("nvim-tree.api")
+
+-- autoclose setup
+require("autoclose").setup()
 
 return {
     telescope_builtin = telescope_builtin,
