@@ -9,29 +9,33 @@ Setup everything that's needed for programming:
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.stylua,
-        -- null_ls.builtins.formatting.gofumpt,
-        -- null_ls.builtins.formatting.golines.with({
-        --     extra_args = {"-m", "120"}
-        -- }),
+        null_ls.builtins.code_actions.proselint,
+        null_ls.builtins.diagnostics.buf,
+        null_ls.builtins.diagnostics.buildifier,
+        null_ls.builtins.diagnostics.hadolint,
+        null_ls.builtins.diagnostics.markdownlint.with({
+            extra_args = {"--stdin", "--disable", "MD013"},
+        }),
+        null_ls.builtins.diagnostics.proselint,
+        null_ls.builtins.diagnostics.pylint, -- can be replaced with ruff
+        null_ls.builtins.diagnostics.semgrep,
+        null_ls.builtins.diagnostics.staticcheck,
         null_ls.builtins.formatting.black.with({
             extra_args = { "--line-length=120", "--preview" },
         }),
-        -- null_ls.builtins.diagnostics.golangci_lint,
-        null_ls.builtins.diagnostics.pylint, -- can be replaced with ruff
-        null_ls.builtins.diagnostics.buf,
-        null_ls.builtins.diagnostics.markdownlint,
-        null_ls.builtins.diagnostics.buildifier,
-        null_ls.builtins.diagnostics.hadolint,
-        null_ls.builtins.diagnostics.semgrep,
-        null_ls.builtins.diagnostics.buildifier,
-        -- null_ls.builtins.formatting.goimports,
+        null_ls.builtins.formatting.buf,
+        null_ls.builtins.formatting.buildifier,
+        null_ls.builtins.formatting.gofumpt,
+        -- null_ls.builtins.formatting.golines.with({
+        --     extra_args = {"-m", "120"}
+        -- }),
+        null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.isort,
         -- null_ls.builtins.formatting.rustfmt, -- not supported by none-ls
-        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.mdformat,
         -- null_ls.builtins.formatting.terraform_fmt, -- needs manual install
-        null_ls.builtins.formatting.buildifier,
-        null_ls.builtins.formatting.buf,
+        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.stylua,
     },
 })
 
