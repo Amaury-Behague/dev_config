@@ -10,7 +10,7 @@ local servers = { -- see https://github.com/williamboman/mason-lspconfig.nvim?ta
     "helm_ls",
     "marksman",
     "terraformls",
-    "tsserver",
+    "ts_ls",
     "yamlls",
     -- "biome", -- needs npm to be installed first
     -- "bufls", -- needs go to be installed first
@@ -30,18 +30,20 @@ require("mason-null-ls").setup({ -- see https://github.com/jose-elias-alvarez/nu
         -- "golines", -- needs go to be installed first
         "black",
         "jq", -- needs to be installed manually first
-        -- "golangci-lint", -- needs go to be installed first
-        "pylint", -- can be replaced with ruff
+        -- "staticcheck",
+        -- "pylint", -- can be replaced with ruff, install in local venv
         "buf",
         "markdownlint",
+        "mdformat",
         "buildifier",
         "hadolint",
         "semgrep",
         -- "goimports", -- needs go to be installed first
-        "isort",
+        -- "isort", -- install in local venv
         -- "rustfmt", -- deprecated, install via rustup
         "shfmt",
         "buildifier",
+        "proselint",
     },
 })
 -- Install manually: terraform_fmt

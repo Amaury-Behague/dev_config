@@ -133,6 +133,8 @@ alias ga="git add ."
 alias gc="git commit"
 alias gca="git commit --amend"
 alias gg="git log --graph --oneline --all"
+# switch to the main branch
+alias gm="MAIN_BRANCH=\$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') && git switch \$MAIN_BRANCH"
 # fetches only the current branch from the remote to be faster and avoid noise
 alias gf="git fetch --prune origin \$(git rev-parse --abbrev-ref HEAD) && git checkout FETCH_HEAD -B \$(git rev-parse --abbrev-ref HEAD)"
 # create branch
