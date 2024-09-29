@@ -66,11 +66,13 @@ vim.keymap.set("n", "<leader>db", plugins.dapui.toggle)
 vim.keymap.set("n", "<leader>t", plugins.tree_api.tree.toggle)
 
 -- Personal shortcuts config
-vim.keymap.set("v", "<leader>cb", '"+y') -- copy to clipboard
-vim.keymap.set("n", "n", "nzz")          -- auto-center when searching
-vim.keymap.set("n", "gd", "gdzz")        -- auto-center when going to definition
-vim.keymap.set("v", "<", "<gv")          -- keep selection when detenting
-vim.keymap.set("v", ">", ">gv")          -- keep selection when indenting
+vim.keymap.set("v", "<leader>y", '"+y') -- copy to clipboard
+vim.keymap.set("n", "n", "nzz")         -- auto-center when searching
+vim.keymap.set("n", "n", "nzz")         -- auto-center when searching
+vim.keymap.set("n", "<C-d>", "<C-d>zz") -- auto-center when jumping half page
+vim.keymap.set("n", "<C-u>", "<C-u>zz") -- auto-center when jumping half page
+vim.keymap.set("v", "<", "<gv")         -- keep selection when detenting
+vim.keymap.set("v", ">", ">gv")         -- keep selection when indenting
 
 -- Vim options config
 vim.opt.nu = true -- line number
@@ -88,7 +90,7 @@ vim.opt.swapfile = false
 vim.opt.hlsearch = true -- switch to false to suppress search highlight
 vim.opt.incsearch = true
 
-vim.opt.scrolloff = 8 -- min 8 lines at the bottom
-vim.opt.colorcolumn = "120"
+vim.opt.scrolloff = 8       -- min 8 lines at the bottom
+vim.opt.colorcolumn = "120" -- highlight column 120
 
 vim.opt.updatetime = 50
