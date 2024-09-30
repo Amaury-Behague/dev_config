@@ -188,6 +188,17 @@ export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 export K9S_CONFIG_DIR="$HOME/.k9s"
 
+### yazi shell wrapper
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+### end yazi shell wrapper
+
 # add specific version of go to path
 # export PATH="/Users/amaury.behague/sdk/go1.22.2/bin:$PATH"
 
