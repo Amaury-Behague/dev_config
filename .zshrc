@@ -147,6 +147,9 @@ alias gbd="git fetch -p 2> /dev/null && for branch in \$(git for-each-ref --form
 alias gpu="git push -u origin \$(git rev-parse --abbrev-ref HEAD) && gh pr create -d -f"
 alias gpf="git push -f"
 
+# rebase some commits
+gcr() { MAIN_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD) && git rebase --onto $MAIN_BRANCH $CURRENT_BRANCH~$1 $CURRENT_BRANCH; }
+
 # Change text navigation keys
 # bindkey "[D" backward-word
 # bindkey "[C" forward-word
