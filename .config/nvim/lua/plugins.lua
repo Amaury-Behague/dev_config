@@ -38,7 +38,7 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
     "numToStr/Comment.nvim",
-    -- "m4xshen/autoclose.nvim",
+    "m4xshen/autoclose.nvim",
     {
         "linux-cultist/venv-selector.nvim",
         branch = "regexp", -- This is the regexp branch, use this for the new version
@@ -123,7 +123,30 @@ require("nvim-tree").setup({
 local tree_api = require("nvim-tree.api")
 
 -- autoclose setup
--- require("autoclose").setup()
+require("autoclose").setup({
+   keys = {
+      ["("] = { escape = false, close = false, pair = "()" },
+      ["["] = { escape = false, close = false, pair = "[]" },
+      ["{"] = { escape = false, close = true, pair = "{}" },
+
+      [">"] = { escape = true, close = false, pair = "<>" },
+      [")"] = { escape = true, close = false, pair = "()" },
+      ["]"] = { escape = true, close = false, pair = "[]" },
+      ["}"] = { escape = true, close = false, pair = "{}" },
+
+      ['"'] = { escape = true, close = true, pair = '""' },
+      ["'"] = { escape = true, close = true, pair = "''" },
+      ["`"] = { escape = true, close = true, pair = "``" },
+   },
+   options = {
+      disabled_filetypes = { "text" },
+      disable_when_touch = false,
+      touch_regex = "[%w(%[{]",
+      pair_spaces = false,
+      auto_indent = true,
+      disable_command_mode = false,
+   },
+})
 
 -- venv-selector setup
 require("venv-selector").setup()

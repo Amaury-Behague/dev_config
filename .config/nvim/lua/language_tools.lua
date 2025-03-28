@@ -3,7 +3,7 @@ require("mason").setup()
 local servers = { -- see https://github.com/williamboman/mason-lspconfig.nvim?tab=readme-ov-file#available-lsp-servers
     "lua_ls",
     "rust_analyzer",
-    -- "gopls", -- needs go to be installed first
+    "gopls", -- needs go to be installed first
     "pyright",
     "bashls",
     "dockerls",
@@ -12,8 +12,8 @@ local servers = { -- see https://github.com/williamboman/mason-lspconfig.nvim?ta
     "terraformls",
     "ts_ls",
     "yamlls",
-    -- "biome", -- needs npm to be installed first
-    -- "bufls", -- needs go to be installed first
+    "biome", -- needs npm to be installed first
+    "buf_ls", -- needs go to be installed first
 }
 require("mason-lspconfig").setup({
     ensure_installed = servers,
@@ -26,7 +26,7 @@ require("mason-lspconfig").setup({
 require("mason-null-ls").setup({ -- see https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
     ensure_installed = {
         "stylua",
-        -- "gofumpt", -- needs go to be installed first
+        "gofumpt", -- needs go to be installed first
         -- "golines", -- needs go to be installed first
         "black",
         "jq", -- needs to be installed manually first
@@ -38,7 +38,7 @@ require("mason-null-ls").setup({ -- see https://github.com/jose-elias-alvarez/nu
         "buildifier",
         "hadolint",
         "semgrep",
-        -- "goimports", -- needs go to be installed first
+        "goimports", -- needs go to be installed first
         -- "isort", -- install in local venv
         -- "rustfmt", -- deprecated, install via rustup
         "shfmt",
@@ -51,7 +51,7 @@ require("mason-null-ls").setup({ -- see https://github.com/jose-elias-alvarez/nu
 require("mason-nvim-dap").setup({
     ensure_installed = {
         "python",
-        -- "delve", -- needs go to be installed first
+        "delve", -- needs go to be installed first
     },
 })
 
