@@ -34,17 +34,11 @@
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+eval "$(starship init zsh)"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-
+#
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -52,25 +46,9 @@
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git virtualenv zsh-syntax-highlighting zsh-autosuggestions)
 
-# Load starship prompt
-eval "$(starship init zsh)"
-
-# Load python shims
-eval "$(pyenv init -)"
-
-zstyle ':completion:*' menu select
-fpath+=~/.zfunc
-
-### yazi shell wrapper
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-### end yazi shell wrapper
+# run git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions once first
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=black"
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # History config
 setopt histignorealldups sharehistory
@@ -79,6 +57,13 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
 
 # ALIASES 
 alias bya="byobu attach -t"
@@ -136,6 +121,10 @@ eval "$(pyenv init -)"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$PATH:/home/amaury/.cargo/bin"
 
+# Add binaries that are go install-ed to PATH
+export PATH="${GOPATH?}/bin:${PATH?}"
+
+# MACOS SPECIFIC SETUP
 # Add homebrew binaries to the path.
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH?}"
 
@@ -151,18 +140,12 @@ export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
 # Add AWS CLI to PATH
 export PATH="/opt/homebrew/opt/awscli@1/bin:$PATH"
 
-# Add binaries that are go install-ed to PATH
-export PATH="${GOPATH?}/bin:${PATH?}"
-
 # store key in the login keychain instead of aws-vault managing a hidden keychain
 export AWS_VAULT_KEYCHAIN_NAME=login
 
 # tweak session times so you don't have to re-enter passwords every 5min
 export AWS_SESSION_TTL=24h
 export AWS_ASSUME_ROLE_TTL=1h
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
