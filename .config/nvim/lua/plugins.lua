@@ -16,9 +16,9 @@ vim.opt.rtp:prepend(lazypath)
 
 -- plugin installation
 require("lazy").setup({
+    {"catppuccin/nvim", name = "catppuccin", priority = 1000},
     "lewis6991/gitsigns.nvim",
     "sindrets/diffview.nvim",
-    "EdenEast/nightfox.nvim",
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
@@ -38,16 +38,18 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
     "numToStr/Comment.nvim",
-    "m4xshen/autoclose.nvim",
+    -- "m4xshen/autoclose.nvim",
     {
         "linux-cultist/venv-selector.nvim",
         branch = "regexp", -- This is the regexp branch, use this for the new version
     },
 })
 
+-- color scheme setup
+vim.cmd.colorscheme("catppuccin")
+
 -- gitsigns setup
 require("gitsigns").setup()
-vim.cmd("colorscheme nightfox")
 
 -- diffview setup
 local diffview = require("diffview")
