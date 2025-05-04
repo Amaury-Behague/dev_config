@@ -1,54 +1,28 @@
 # Uncomment to troubleshoot zsh performance (also uncomment at the bottom)
 # zmodload zsh/zprof
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
 eval "$(starship init zsh)"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-#
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git virtualenv zsh-syntax-highlighting zsh-autosuggestions)
+# antidote plugin manager config 
+[[ -r ~/.zsh/plugins/antidote/antidote.zsh ]] ||
+    git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.zsh/plugins/antidote
+source ~/.zsh/plugins/antidote/antidote.zsh
 
-# run git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions once first
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=black"
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# plugins list
+cat <<EOF > ~/.zsh/plugins/plugins.txt
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+EOF
+
+
+antidote load ~/.zsh/plugins/plugins.txt
+
+# zsh-history-substring-search configuration
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=green,bold"
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=""
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
 
 # History config
 setopt histignorealldups sharehistory
@@ -74,15 +48,17 @@ alias gs="git status"
 alias ga="git add ."
 alias gc="git commit"
 alias gca="git commit --amend"
-alias gg="git log --graph --oneline --all"
 # switch to the main branch
 alias gm="MAIN_BRANCH=\$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') && git switch \$MAIN_BRANCH"
+alias gg="git log --graph --oneline --all"
 # fetches only the current branch from the remote to be faster and avoid noise
 alias gf="git fetch --prune origin \$(git rev-parse --abbrev-ref HEAD) && git checkout FETCH_HEAD -B \$(git rev-parse --abbrev-ref HEAD)"
 # create branch
 alias gbc="git switch -c"
 # pulls the main branch and rebases your branch on it
 alias gbr="MAIN_BRANCH=\$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') CURRENT_BRANCH=\$(git rev-parse --abbrev-ref HEAD) && git switch \$MAIN_BRANCH && gf && git switch \$CURRENT_BRANCH && git rebase \$MAIN_BRANCH"
+# rebase some commits
+gcr() { MAIN_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD) && git rebase --onto $MAIN_BRANCH $CURRENT_BRANCH~$1 $CURRENT_BRANCH; }
 # delete branches that have been deleted from the remote
 alias gbd="git fetch -p 2> /dev/null && for branch in \$(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '\$2 == \"[gone]\" {sub(\"refs/heads/\", \"\", \$1); print \$1}'); do git branch -D \$branch; done"
 # push the branch to the remote (with the same name) and open PR with using commit messages
@@ -90,9 +66,6 @@ alias gpu="git push -u origin \$(git rev-parse --abbrev-ref HEAD) && gh pr creat
 # gitlab version
 # alias gpu="git push -u origin \$(git rev-parse --abbrev-ref HEAD) && glab mr create --fill -y"
 alias gpf="git push -f"
-
-# rebase some commits
-gcr() { MAIN_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD) && git rebase --onto $MAIN_BRANCH $CURRENT_BRANCH~$1 $CURRENT_BRANCH; }
 
 # use uv instead of plain pip
 alias pip="uv pip"
