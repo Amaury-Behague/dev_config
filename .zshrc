@@ -8,13 +8,14 @@ eval "$(starship init zsh)"
     git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.zsh/plugins/antidote
 source ~/.zsh/plugins/antidote/antidote.zsh
 
-# plugins list
-cat <<EOF > ~/.zsh/plugins/plugins.txt
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-syntax-highlighting
-zsh-users/zsh-history-substring-search
+# plugins list, run 'rm ~/.zsh/plugins/plugins.txt' when you add plugins to refresh
+# 'kind:defer' makes it so that plugins load do not block your shell
+[[ -f ~/.zsh/plugins/plugins.txt ]] || cat <<EOF > ~/.zsh/plugins/plugins.txt
+zsh-users/zsh-autosuggestions kind:defer
+zsh-users/zsh-syntax-highlighting kind:defer
+zsh-users/zsh-history-substring-search kind:defer
+lukechilds/zsh-nvm kind:defer 
 EOF
-
 
 antidote load ~/.zsh/plugins/plugins.txt
 
