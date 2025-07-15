@@ -54,6 +54,7 @@ vim.keymap.set("n", "<leader>ff", plugins.telescope_builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", plugins.telescope_builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", plugins.telescope_builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", plugins.telescope_builtin.help_tags, {})
+vim.keymap.set("n", "<leader>fr", plugins.telescope_builtin.resume, {})
 vim.keymap.set("n", "<C-p>", plugins.telescope_builtin.find_files, {})
 
 -- diffview shortcuts
@@ -67,11 +68,12 @@ vim.keymap.set("n", "<leader>t", plugins.tree_api.tree.toggle)
 
 -- Personal shortcuts config
 vim.keymap.set("v", "<leader>y", '"+y') -- copy to clipboard
-vim.keymap.set("n", "n", "nzz")          -- auto-center when searching
-vim.keymap.set("n", "gd", "gdzz")        -- auto-center when going to definition
-vim.keymap.set("v", "<", "<gv")          -- keep selection when detenting
-vim.keymap.set("v", ">", ">gv")          -- keep selection when indenting
-vim.keymap.set("v", "y", "y`]")          -- move cursor to the end of yanked test 
+vim.keymap.set("n", "n", "nzz")         -- auto-center when searching
+vim.keymap.set("n", "gd", "gdzz")       -- auto-center when going to definition
+vim.keymap.set("v", "<", "<gv")         -- keep selection when detenting
+vim.keymap.set("v", ">", ">gv")         -- keep selection when indenting
+vim.keymap.set("v", "y", "y`]")         -- yank and move cursor to the end of yanked text
+vim.keymap.set("n", "<leader>p", '"0p') -- paste from 0 register
 
 -- Vim options config
 vim.opt.nu = true -- line number

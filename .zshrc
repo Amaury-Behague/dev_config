@@ -3,7 +3,7 @@
 
 eval "$(starship init zsh)"
 
-# antidote plugin manager config 
+# antidote plugin manager config
 [[ -r ~/.zsh/plugins/antidote/antidote.zsh ]] ||
     git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.zsh/plugins/antidote
 source ~/.zsh/plugins/antidote/antidote.zsh
@@ -14,7 +14,7 @@ source ~/.zsh/plugins/antidote/antidote.zsh
 zsh-users/zsh-autosuggestions kind:defer
 zsh-users/zsh-syntax-highlighting kind:defer
 zsh-users/zsh-history-substring-search kind:defer
-lukechilds/zsh-nvm kind:defer 
+lukechilds/zsh-nvm kind:defer
 EOF
 
 antidote load ~/.zsh/plugins/plugins.txt
@@ -22,8 +22,15 @@ antidote load ~/.zsh/plugins/plugins.txt
 # zsh-history-substring-search configuration
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=green,bold"
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND=""
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  bindkey "$terminfo[kcuu1]" history-substring-search-up
+  bindkey "$terminfo[kcud1]" history-substring-search-down
+else
+  echo "Unknown OS: $OSTYPE"
+fi
 
 # History config
 setopt histignorealldups sharehistory
@@ -40,7 +47,7 @@ HISTFILE=~/.zsh_history
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# ALIASES 
+# ALIASES
 alias bya="byobu attach -t"
 alias byd="byobu detach"
 alias byn="byobu new -s"
@@ -62,6 +69,8 @@ alias gbr="MAIN_BRANCH=\$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^re
 gcr() { MAIN_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD) && git rebase --onto $MAIN_BRANCH $CURRENT_BRANCH~$1 $CURRENT_BRANCH; }
 # delete branches that have been deleted from the remote
 alias gbd="git fetch -p 2> /dev/null && for branch in \$(git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '\$2 == \"[gone]\" {sub(\"refs/heads/\", \"\", \$1); print \$1}'); do git branch -D \$branch; done"
+# force delete all branches except the main branch (dangerous, for big repos)
+alias gbdf="git branch | grep -v \$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@') | xargs git branch -D"
 # push the branch to the remote (with the same name) and open PR with using commit messages
 alias gpu="git push -u origin \$(git rev-parse --abbrev-ref HEAD) && gh pr create -d -f"
 # gitlab version
@@ -73,7 +82,6 @@ alias pip="uv pip"
 
 # file manager (fm) alias for yazi
 alias fm="yazi"
-
 
 # ENV VARS
 export PYTHONBREAKPOINT="ipdb.set_trace"
@@ -95,38 +103,40 @@ eval "$(pyenv init -)"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$PATH:/home/amaury/.cargo/bin"
 
+# Point GOPATH to our go sources
+export GOPATH="${HOME?}/go"
+
 # Add binaries that are go install-ed to PATH
 export PATH="${GOPATH?}/bin:${PATH?}"
 
-# MACOS SPECIFIC SETUP
-# Add homebrew binaries to the path.
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH?}"
+# fix kitty over SSH
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
-# Force certain more-secure behaviours from homebrew
-export HOMEBREW_NO_INSECURE_REDIRECT=1
-export HOMEBREW_CASK_OPTS=--require-sha
-export HOMEBREW_DIR=/opt/homebrew
-export HOMEBREW_BIN=/opt/homebrew/bin
+# Homebrew config for MacOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Add homebrew binaries to the path.
+    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:${PATH?}"
 
-# Prefer GNU binaries to Macintosh binaries.
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
+    # Force certain more-secure behaviours from homebrew
+    export HOMEBREW_NO_INSECURE_REDIRECT=1
+    export HOMEBREW_CASK_OPTS=--require-sha
+    export HOMEBREW_DIR=/opt/homebrew
+    export HOMEBREW_BIN=/opt/homebrew/bin
 
-# Add AWS CLI to PATH
-export PATH="/opt/homebrew/opt/awscli@1/bin:$PATH"
+    # Prefer GNU binaries to Macintosh binaries.
+    export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:${PATH}"
+fi
 
-# store key in the login keychain instead of aws-vault managing a hidden keychain
-export AWS_VAULT_KEYCHAIN_NAME=login
 
-# tweak session times so you don't have to re-enter passwords every 5min
-export AWS_SESSION_TTL=24h
-export AWS_ASSUME_ROLE_TTL=1h
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-export K9S_CONFIG_DIR="$HOME/.k9s"
-
-# add specific version of go to path
-# export PATH="/Users/amaury.behague/sdk/go1.22.2/bin:$PATH"
+# load additional machine-specific config if it exists
+if [ -f ~/.zsh/misc.sh ]; then
+    source ~/.zsh/misc.sh
+fi
 
 # Uncomment to troubleshoot zsh performance (also uncomment at the top)
 # zprof
+
