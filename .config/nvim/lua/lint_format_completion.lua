@@ -17,23 +17,14 @@ null_ls.setup({
             extra_args = { "--stdin", "--disable", "MD013" },
         }),
         null_ls.builtins.diagnostics.proselint,
-        -- null_ls.builtins.diagnostics.pylint, -- can be replaced with ruff, install in local venv
-        null_ls.builtins.diagnostics.semgrep,
-        -- null_ls.builtins.diagnostics.staticcheck,
         null_ls.builtins.formatting.black.with({
             extra_args = { "--line-length=120", "--preview" },
         }),
-        null_ls.builtins.formatting.buf,
-        null_ls.builtins.formatting.buildifier,
         null_ls.builtins.formatting.gofumpt,
-        -- null_ls.builtins.formatting.golines.with({
-        --     extra_args = {"-m", "120"}
-        -- }),
         null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.isort.with({
             extra_args = { "--sl", "--line-length", "120" },
         }), -- install in local venv
-        -- null_ls.builtins.formatting.rustfmt, -- not supported by none-ls
         null_ls.builtins.formatting.mdformat,
         null_ls.builtins.formatting.terraform_fmt, -- needs manual install
         null_ls.builtins.formatting.shfmt,

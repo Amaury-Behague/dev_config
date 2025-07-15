@@ -43,6 +43,29 @@ require("lazy").setup({
         "linux-cultist/venv-selector.nvim",
         branch = "regexp", -- This is the regexp branch, use this for the new version
     },
+},
+{
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+    cache = {
+      enabled = true,
+    },
+    -- profiling = {
+    --   enabled = true,
+    --   threshold = 5, -- ms
+    -- },
+  }
 })
 
 -- color scheme setup

@@ -13,7 +13,7 @@ local servers = { -- see https://github.com/williamboman/mason-lspconfig.nvim?ta
     "ts_ls",
     "yamlls",
     "biome", -- needs npm to be installed first
-    "buf_ls", -- needs go to be installed first
+    "buf", -- needs go to be installed first
 }
 require("mason-lspconfig").setup({
     ensure_installed = servers,
@@ -27,23 +27,18 @@ require("mason-null-ls").setup({ -- see https://github.com/jose-elias-alvarez/nu
     ensure_installed = {
         "stylua",
         "gofumpt", -- needs go to be installed first
-        -- "golines", -- needs go to be installed first
         "black",
         "jq", -- needs to be installed manually first
-        -- "staticcheck",
-        -- "pylint", -- can be replaced with ruff, install in local venv
         "buf",
         "markdownlint",
         "mdformat",
         "buildifier",
         "hadolint",
-        "semgrep",
         "goimports", -- needs go to be installed first
-        -- "isort", -- install in local venv
-        -- "rustfmt", -- deprecated, install via rustup
+        "isort", -- install in local venv
         "shfmt",
-        "buildifier",
         "proselint",
+        "terraform_fmt",
     },
 })
 -- Install manually: terraform_fmt

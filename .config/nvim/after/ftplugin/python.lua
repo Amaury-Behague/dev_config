@@ -1,1 +1,1 @@
-# require('venv-selector').retrieve_from_cache()
+require('venv-selector').retrieve_from_cache()
