@@ -69,7 +69,6 @@ vim.keymap.set("n", "<leader>t", plugins.tree_api.tree.toggle)
 -- Personal shortcuts config
 vim.keymap.set("v", "<leader>y", '"+y') -- copy to clipboard
 vim.keymap.set("n", "n", "nzz")         -- auto-center when searching
-vim.keymap.set("n", "gd", "gdzz")       -- auto-center when going to definition
 vim.keymap.set("v", "<", "<gv")         -- keep selection when detenting
 vim.keymap.set("v", ">", ">gv")         -- keep selection when indenting
 vim.keymap.set("v", "y", "y`]")         -- yank and move cursor to the end of yanked text
