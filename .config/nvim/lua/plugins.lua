@@ -38,7 +38,7 @@ require("lazy").setup({
     "nvim-tree/nvim-tree.lua",
     "nvim-tree/nvim-web-devicons",
     "numToStr/Comment.nvim",
-    -- "m4xshen/autoclose.nvim",
+    "m4xshen/autoclose.nvim",
     {
         "linux-cultist/venv-selector.nvim",
         branch = "regexp", -- This is the regexp branch, use this for the new version
@@ -62,12 +62,23 @@ require("plenary.async")
 require("Comment").setup()
 
 -- telescope setup
+local telescope_builtin = require("telescope.builtin")
+local telescope_actions = require("telescope.actions")
 require("telescope").setup({
     defaults = {
         file_ignore_patterns = { ".pb.go$" },
     },
+    pickers = {
+        live_grep = {
+            mappings = {
+                i = {
+                    ["<C-Down>"] = telescope_actions.cycle_history_next,
+                    ["<C-Up>"] = telescope_actions.cycle_history_prev,
+                },
+            },
+        },
+    },
 })
-local telescope_builtin = require("telescope.builtin")
 
 -- treesitter setup
 require("nvim-treesitter.configs").setup({
@@ -126,28 +137,28 @@ local tree_api = require("nvim-tree.api")
 
 -- autoclose setup
 require("autoclose").setup({
-   keys = {
-      ["("] = { escape = false, close = false, pair = "()" },
-      ["["] = { escape = false, close = false, pair = "[]" },
-      ["{"] = { escape = false, close = true, pair = "{}" },
+    keys = {
+        ["("] = { escape = false, close = false, pair = "()" },
+        ["["] = { escape = false, close = false, pair = "[]" },
+        ["{"] = { escape = false, close = true, pair = "{}" },
 
-      [">"] = { escape = true, close = false, pair = "<>" },
-      [")"] = { escape = true, close = false, pair = "()" },
-      ["]"] = { escape = true, close = false, pair = "[]" },
-      ["}"] = { escape = true, close = false, pair = "{}" },
+        [">"] = { escape = true, close = false, pair = "<>" },
+        [")"] = { escape = true, close = false, pair = "()" },
+        ["]"] = { escape = true, close = false, pair = "[]" },
+        ["}"] = { escape = true, close = false, pair = "{}" },
 
-      ['"'] = { escape = true, close = true, pair = '""' },
-      ["'"] = { escape = true, close = true, pair = "''" },
-      ["`"] = { escape = true, close = true, pair = "``" },
-   },
-   options = {
-      disabled_filetypes = { "text" },
-      disable_when_touch = false,
-      touch_regex = "[%w(%[{]",
-      pair_spaces = false,
-      auto_indent = true,
-      disable_command_mode = false,
-   },
+        ['"'] = { escape = true, close = true, pair = '""' },
+        ["'"] = { escape = true, close = true, pair = "''" },
+        ["`"] = { escape = true, close = true, pair = "``" },
+    },
+    options = {
+        disabled_filetypes = { "text" },
+        disable_when_touch = false,
+        touch_regex = "[%w(%[{]",
+        pair_spaces = false,
+        auto_indent = true,
+        disable_command_mode = false,
+    },
 })
 
 -- venv-selector setup
